@@ -21,7 +21,7 @@ jobs:
         uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: environment.yml
-          activate-environment: earth
+          environment-name: earth
           init-shell: bash
           cache-downloads: true
           cache-environment: true
