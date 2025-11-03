@@ -20,6 +20,7 @@ dependencies:
   - pydantic
   - pytorch
   - lpips
+  - sunpy
 pip:
   - ray==2.51.1
 prefix: /Users/quincycambrel/miniforge3/envs/earth
