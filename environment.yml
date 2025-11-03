@@ -1,0 +1,25 @@
+name: earth
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - cartopy
+  - ca-certificates
+  - openssl
+  - earthaccess
+  - certifi
+  - geopandas
+  - matplotlib
+  - netcdf4
+  - pyyaml
+  - scikit-image
+  - streamlit
+  - boto3
+  - numba
+  - memray
+  - pydantic
+  - pytorch
+  - lpips
+pip:
+  - ray==2.51.1
+prefix: /Users/quincycambrel/miniforge3/envs/earth
