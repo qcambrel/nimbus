@@ -1,0 +1,11 @@
+.env
+features/__pycache__
+metrics/__pycache__
+plotting/__pycache__
+processing/__pycache__
+tests/__pycache__
+utils/__pycache__
+video/__pycache__
+.pytest_cache
+tests/.pytest_cache
+.DS_Store
