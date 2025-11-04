@@ -1,4 +1,4 @@
-name: EarthDash Actions
+name: NimbusActions
 run-name: Build, test, and deploy
 on:
   push:
