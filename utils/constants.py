@@ -44,7 +44,21 @@ VIEWS: tuple[str, ...]                     = (
     "westatlantic_mapset",
     "globe"
 )
-WEATHER_VARIABLES: tuple[str, ...]         = (
+WEATHER_VARIABLES_SHORT: tuple[str, ...]    = (
+    "wind",
+    "temp",
+    "pressure",
+    "rain",
+    "snow",
+    "types",
+    "cape",
+    "tpw",
+    "radar",
+    "lwir",
+    "aerosols",
+    "vort"
+)
+WEATHER_VARIABLES_LONG: tuple[str, ...]     = (
     "10m winds",
     "2m temperature",
     "sea level pressure",
@@ -60,3 +74,4 @@ WEATHER_VARIABLES: tuple[str, ...]         = (
 )
 AEROSOLS_EDGECOLOR: np.ndarray              = np.array([50, 50, 50]) / 255
 TEMP_DIR: str                               = os.path.join(os.getcwd(), "tmp")
+WEIGHTS_DIR: str                            = os.path.join(os.getcwd(), "weights")

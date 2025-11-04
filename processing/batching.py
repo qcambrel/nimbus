@@ -7,7 +7,7 @@ def batch_process(images: list[np.ndarray], func: callable, context: BatchContex
     Batches a list of images and applies a function to each batch.
     Batching with Ray Data improves performance.
     """
-    ds = ray.data.read_images(images).map_batches(
+    ds = ray.data.from_numpy(images).map_batches(
         func,
         fn_args=context.fn_args,
         fn_kwargs=context.fn_kwargs,

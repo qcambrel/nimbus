@@ -1,38 +1,80 @@
 import numpy as np
-from numba import int64, float64, float32
-from numba.experimental import jitclass
-from abc import ABC, abstractmethod
+import xesmf as xe
+import xarray as xr
+from utils.schemas import RegridderContext
 
-spec = []
+def bounds(centers: np.ndarray) -> np.ndarray:
+    """
+    Computes the cell boundaries of center coordinates for conservative regridding.
+    """
+    dist: np.ndarray  = np.diff(centers) / 2
+    first: np.ndarray = centers[0] - dist[0]
+    last: np.ndarray  = centers[-1] + dist[-1]
+    return np.concatenate([[first], centers[:-1] + dist, [last]])
 
-class Regridder(ABC):
-    def __init__(self):
-        pass
+def build_regridder(context: RegridderContext) -> xe.Regridder:
+    """
+    Builds a regridder for conservative, bilinear, or nearest regridding.
 
-    @abstractmethod
-    def regrid(self):
-        pass
+    Optional: Save weights for reuse.
+    """
+    method: str    = context.method
+    x0, x1, y0, y1 = context.extent
 
-@jitclass(spec)
-class ConservativeRegridder(Regridder):
-    def __init__(self):
-        pass
+    shape_in: tuple[int, int]  = context.shape_in
+    shape_out: tuple[int, int] = context.shape_out
 
-    def regrid(self):
-        pass
+    lon_in: np.ndarray  = np.linspace(x0, x1, shape_in[1])
+    lat_in: np.ndarray  = np.linspace(y0, y1, shape_in[0])
+    lon_out: np.ndarray = np.linspace(x0, x1, shape_out[1])
+    lat_out: np.ndarray = np.linspace(y0, y1, shape_out[0])
 
-@jitclass(spec)
-class BilinearRegridder(Regridder):
-    def __init__(self):
-        pass
+    match method:
+        case "conservative":
+            lon_b_in: np.ndarray  = bounds(lon_in)
+            lat_b_in: np.ndarray  = bounds(lat_in)
+            lon_b_out: np.ndarray = bounds(lon_out)
+            lat_b_out: np.ndarray = bounds(lat_out)
+            
+            grid_in = xr.Dataset(
+                {
+                    "lon": (["lon"], lon_in),
+                    "lat": (["lat"], lat_in),
+                    "lon_b": (["lon_b"], lon_b_in),
+                    "lat_b": (["lat_b"], lat_b_in)
+                }
+            )
 
-    def regrid(self):
-        pass
+            grid_out = xr.Dataset(
+                {
+                    "lon": (["lon"], lon_out),
+                    "lat": (["lat"], lat_out),
+                    "lon_b": (["lon_b"], lon_b_out),
+                    "lat_b": (["lat_b"], lat_b_out)
+                }
+            )
+        case "bilinear" | "nearest":
+            grid_in = {
+                "lon": lon_in,
+                "lat": lat_in
+            }
 
-@jitclass(spec)
-class NearestRegridder(Regridder):
-    def __init__(self):
-        pass
-
-    def regrid(self):
-        pass
+            grid_out = {
+                "lon": lon_out,
+                "lat": lat_out
+            }
+        case _:
+            raise ValueError(f"Invalid regridding method: {method}")
+    
+    reuse_weights: bool = context.reuse_weights
+    weights_dir: str    = context.weights_dir
+    filename: str       = f"{weights_dir}/{method}-weights.nc"
+    
+    regridder = xe.Regridder(
+        grid_in,
+        grid_out,
+        method=method,
+        filename=filename,
+        reuse_weights=reuse_weights
+    )
+    return regridder

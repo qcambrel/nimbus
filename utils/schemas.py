@@ -87,3 +87,12 @@ class RoadContext(BaseModel):
     pad_inches: float | None                  = 0
     transparent: bool | None                  = True
     compress: int | None                      = 9
+
+
+class RegridderContext(BaseModel):
+    extent: tuple[float, float, float, float] = (-180, 180, -90, 90)
+    method: str | None                        = "conservative"
+    shape_in: tuple[int, int] | None          = None
+    shape_out: tuple[int, int] | None         = None
+    reuse_weights: bool | None                = False
+    weights_dir: str | None                   = None
