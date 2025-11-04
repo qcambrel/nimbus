@@ -1,7 +1,7 @@
 import numpy as np
-from typing import Any
 import matplotlib as mpl
 import cartopy.crs as ccrs
+from typing import Any, Type
 from pydantic import BaseModel
 import matplotlib.pyplot as plt
 
@@ -11,28 +11,28 @@ class BandpassContext(BaseModel):
     gaussian: bool    = False
 
 class PlotterContext(BaseModel):
-    projection: ccrs.Projection     = ccrs.PlateCarree()
-    transform: ccrs.Projection      = ccrs.PlateCarree()
-    cmap: str | mpl.colors.Colormap = plt.cm.viridis
-    norm: mpl.colors.Normalize      = None
-    vmin: float                     = None
-    vmax: float                     = None
+    projection: Type[ccrs.Projection]       = ccrs.PlateCarree()
+    transform: Type[ccrs.Projection]        = ccrs.PlateCarree()
+    cmap: str | Type[mpl.colors.Colormap]   = plt.cm.viridis
+    norm: Type[mpl.colors.Normalize] | None = None
+    vmin: float | None                      = None
+    vmax: float | None                      = None
 
 class BatchContext(BaseModel):
-    fn_args: list[Any] | None   = None
-    fn_kwargs: dict[Any] | None = None
-    batch_size: int | None      = None
-    num_cpus: float | None      = None
-    num_gpus: float | None      = None
-    concurrency: int | None     = None
+    fn_args: list[Any] | None        = None
+    fn_kwargs: dict[str, Any] | None = None
+    batch_size: int | None           = None
+    num_cpus: float | None           = None
+    num_gpus: float | None           = None
+    concurrency: int | None          = None
 
 class BackgroundContext(BaseModel):
     background: str | None                    = None
     background_name: str | None               = None
     tag: str | None                           = None
     resolution: int | None                    = None
-    projection: ccrs.Projection               = ccrs.PlateCarree()
-    transform: ccrs.Projection                = ccrs.PlateCarree()
+    projection: Type[ccrs.Projection]         = ccrs.PlateCarree()
+    transform: Type[ccrs.Projection]          = ccrs.PlateCarree()
     facecolor: str | None                     = None
     edgecolor: str | None                     = None
     linewidth: float | None                   = None
@@ -47,8 +47,8 @@ class CoastlineContext(BaseModel):
     coastlines: str | None                    = None
     tag: str | None                           = None
     resolution: int | None                    = None
-    projection: ccrs.Projection               = ccrs.PlateCarree()
-    transform: ccrs.Projection                = ccrs.PlateCarree()
+    projection: Type[ccrs.Projection]         = ccrs.PlateCarree()
+    transform: Type[ccrs.Projection]          = ccrs.PlateCarree()
     facecolor: str | None                     = None
     edgecolor: str | None                     = None
     linewidth: float | None                   = None
@@ -62,8 +62,8 @@ class BorderContext(BaseModel):
     borders: str | None                       = None
     tag: str | None                           = None
     resolution: int | None                    = None
-    projection: ccrs.Projection               = ccrs.PlateCarree()
-    transform: ccrs.Projection                = ccrs.PlateCarree()
+    projection: Type[ccrs.Projection]         = ccrs.PlateCarree()
+    transform: Type[ccrs.Projection]          = ccrs.PlateCarree()
     facecolor: str | None                     = None
     edgecolor: str | None                     = None
     linewidth: float | None                   = None
@@ -77,8 +77,8 @@ class RoadContext(BaseModel):
     roads: str | None                         = None
     tag: str | None                           = None
     resolution: int | None                    = None
-    projection: ccrs.Projection               = ccrs.PlateCarree()
-    transform: ccrs.Projection                = ccrs.PlateCarree()
+    projection: Type[ccrs.Projection]         = ccrs.PlateCarree()
+    transform: Type[ccrs.Projection]          = ccrs.PlateCarree()
     facecolor: str | None                     = None
     edgecolor: str | None                     = None
     linewidth: float | None                   = None
