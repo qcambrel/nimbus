@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib as mpl
 import cartopy.crs as ccrs
 
-ROOT_DIR: str                              = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR: str                              = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NATURAL_EARTH: str                         = "https://shadedrelief.com/natural3/ne3_data/16200/textures/2_no_clouds_16k.jpg"
 GSHHS_COASTLINES: str                      = "https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhg/latest/gshhg-shp-2.3.7.zip"
 BORDERS: str                               = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-gpkg.zip"
