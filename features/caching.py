@@ -68,7 +68,7 @@ def cache_background(cache_dir: str, context: BackgroundContext) -> str:
             plt.close()
             raise ValueError(f"Unknown background: {context.background_name}")
     
-    save_dir = f"{cache_dir}/{context.tag}-{context.background_name}.png"
+    save_dir = os.path.join(cache_dir, f"{context.tag}-{context.background_name}.png")
     plt.axis("off")
     plt.savefig(save_dir, bbox_inches=context.bbox_inches, pad_inches=context.pad_inches)
     plt.close()
@@ -108,7 +108,7 @@ def cache_coastlines(cache_dir: str, temp_dir: str, context: CoastlineContext, c
     ax.add_feature(shore)
     ax.set_extent(context.extent)
 
-    save_dir = f"{cache_dir}/{context.tag}-gshhs.png"
+    save_dir = os.path.join(cache_dir, f"{context.tag}-gshhs.png")
     plt.axis("off")
     plt.savefig(save_dir, bbox_inches=context.bbox_inches, pad_inches=context.pad_inches, transform=context.transform)
     plt.close()
@@ -150,7 +150,7 @@ def cache_borders(cache_dir: str, temp_dir: str, context: BorderContext) -> str:
     )
     ax.add_feature(border)
 
-    save_dir = f"{cache_dir}/{context.tag}-borders.png"
+    save_dir = os.path.join(cache_dir, f"{context.tag}-borders.png")
     plt.axis("off")
     plt.savefig(save_dir, bbox_inches=context.bbox_inches, pad_inches=context.pad_inches, transparent=context.transparent)
     plt.close()

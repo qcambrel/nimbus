@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import xesmf as xe
 import xarray as xr
@@ -66,9 +67,9 @@ def build_regridder(context: RegridderContext) -> xe.Regridder:
         case _:
             raise ValueError(f"Invalid regridding method: {method}")
     
-    reuse_weights: bool = context.reuse_weights
-    weights_dir: str    = context.weights_dir
-    filename: str       = f"{weights_dir}/{method}-weights.nc"
+    reuse_weights: bool     = context.reuse_weights
+    weights_dir: str | None = context.weights_dir
+    filename: str | None    = os.path.join(weights_dir, f"{method}-weights.nc") if reuse_weights else None
     
     regridder = xe.Regridder(
         grid_in,

@@ -3,11 +3,12 @@ import numpy as np
 import matplotlib as mpl
 import cartopy.crs as ccrs
 
+ROOT_DIR: str                              = os.path.dirname(os.path.abspath(__file__))
 NATURAL_EARTH: str                         = "https://shadedrelief.com/natural3/ne3_data/16200/textures/2_no_clouds_16k.jpg"
 GSHHS_COASTLINES: str                      = "https://www.ngdc.noaa.gov/mgg/shorelines/data/gshhg/latest/gshhg-shp-2.3.7.zip"
 BORDERS: str                               = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-gpkg.zip"
 ROADS: str                                 = "https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_roads.zip"
-CACHE_DIR: str                             = os.path.join(os.getcwd(), "cache")
+CACHE_DIR: str                             = os.path.join(ROOT_DIR, "features", "cache")
 TARGET_SHAPE: tuple[int, int]              = (2760, 5760)
 PREFERRED_DPI: int                         = 1500
 OCEAN_COLOR: str                           = mpl.colors.rgb2hex(np.array([190, 232, 255]) / 255)
@@ -73,5 +74,5 @@ WEATHER_VARIABLES_LONG: tuple[str, ...]     = (
     "vorticity"
 )
 AEROSOLS_EDGECOLOR: np.ndarray              = np.array([50, 50, 50]) / 255
-TEMP_DIR: str                               = os.path.join(os.getcwd(), "tmp")
-WEIGHTS_DIR: str                            = os.path.join(os.getcwd(), "weights")
+TEMP_DIR: str                               = os.path.join(ROOT_DIR, "features", "tmp")
+WEIGHTS_DIR: str                            = os.path.join(ROOT_DIR, "processing", "weights")
