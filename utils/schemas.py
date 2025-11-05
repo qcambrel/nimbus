@@ -107,11 +107,11 @@ class RegridderContext(BaseModel):
     weights_dir: str | None                   = None
 
 class ColormapContext(BaseModel):
-    vmin: float | None              = None
-    vmax: float | None              = None
-    levels: int | np.ndarray | None = None
-    rgb_npy: np.ndarray | None      = None
-    rgb_mpl: str | None             = None
-    filename: str | None            = None
-    target: np.ndarray | None       = None
-    ticks: np.ndarray | None        = None
+    vmin: float | None               = None
+    vmax: float | None               = None
+    levels: Type[np.ndarray] | None  = None
+    rgb_npy: Type[np.ndarray] | None = None
+    rgb_mpl: str | None              = None
+    filename: str | None             = None
+    target: Type[np.ndarray] | None  = None
+    ticks: Type[np.ndarray] | None   = None

@@ -18,19 +18,20 @@ class Colormap:
         self._map()
 
     def _map(self):
-        match type(self.rgb):
-            case np.ndarray:
+        if self.rgb is None:
+            if self.filename and os.path.exists(self.filename):
+                with open(self.filename, "rb") as pkl:
+                    self.cmap = pickle.load(pkl)
+            else:
+                raise FileNotFoundError(f"Colormap file {self.filename} not found")
+        elif type(self.rgb) is np.ndarray:
                 self.cmap = mpl.colors.ListedColormap(self.rgb)
-            case type(""):
+        elif type(self.rgb) is str:
                 self.cmap = plt.colormaps[self.rgb]
-            case _:
-                if self.filename and os.path.exists(self.filename):
-                    with open(self.filename, "rb") as pkl:
-                        self.cmap = pickle.load(pkl)
-                else:
-                    raise NotImplementedError
+        else:
+            raise TypeError(f"Colormap type {type(self.rgb)} not supported")
         
-        if self.vmin and self.vmax:
+        if self.vmin is not None and self.vmax is not None:
             self.norm   = mpl.colors.Normalize(vmin=self.vmin, vmax=self.vmax)
         else:     
             self.levels = interpolate_levels(self.ticks, self.target) if self.target else self.levels
