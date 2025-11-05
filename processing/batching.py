@@ -1,3 +1,5 @@
+# DEPRECIATED
+
 import ray
 import numpy as np
 from utils.schemas import BatchContext
@@ -14,6 +16,7 @@ def batch_process(images: list[np.ndarray], func: callable, context: BatchContex
         batch_size=context.batch_size,
         num_cpus=context.num_cpus,
         num_gpus=context.num_gpus,
-        concurrency=context.concurrency
+        concurrency=context.concurrency,
+        batch_format=context.batch_format
     )
     return ds

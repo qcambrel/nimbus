@@ -25,6 +25,7 @@ class BatchContext(BaseModel):
     num_cpus: float | None           = None
     num_gpus: float | None           = None
     concurrency: int | None          = None
+    batch_format: str | None         = None
 
 class BackgroundContext(BaseModel):
     background: str | None                    = None

@@ -30,6 +30,8 @@ def build_regridder(context: RegridderContext) -> xe.Regridder:
     lon_out: np.ndarray = np.linspace(x0, x1, shape_out[1])
     lat_out: np.ndarray = np.linspace(y0, y1, shape_out[0])
 
+    serial: str = f"{method}-{shape_in[0]}x{shape_in[1]}in-{shape_out[0]}x{shape_out[1]}out"
+
     match method:
         case "conservative":
             lon_b_in: np.ndarray  = bounds(lon_in)
@@ -69,7 +71,7 @@ def build_regridder(context: RegridderContext) -> xe.Regridder:
     
     reuse_weights: bool     = context.reuse_weights
     weights_dir: str | None = context.weights_dir
-    filename: str | None    = os.path.join(weights_dir, f"{method}-weights.nc") if reuse_weights else None
+    filename: str | None    = os.path.join(weights_dir, f"{serial}-weights.nc") if reuse_weights else None
     
     regridder = xe.Regridder(
         grid_in,
@@ -79,3 +81,10 @@ def build_regridder(context: RegridderContext) -> xe.Regridder:
         reuse_weights=reuse_weights
     )
     return regridder
+
+def batch_regrid(batch: dict[str, np.ndarray], regridder: xe.Regridder) -> dict[str, np.ndarray]:
+    """
+    Batch process for regridding.
+    """
+    batch["data"] = regridder(batch["data"])
+    return batch
