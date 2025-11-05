@@ -32,20 +32,21 @@ class WindPlotter(Plotter):
         self.extent = context.extent
         self.projection = context.projection
         self.transform = context.transform
+        self.center = context.center
         self.resolution = context.resolution
         self.limit = context.limit
         self.tag = context.tag
         self.transparent = context.transparent
         self.bbox_inches = context.bbox_inches
         self.pad_inches = context.pad_inches
+        self.inplace = context.inplace
 
     def render(self, cache_dir: str, timestamp: str):
         self.fig = plt.figure(dpi=self.resolution)
-        self.ax  = plt.axes(projection=self.projection())
+        self.ax  = plt.axes(projection=self.projection(self.center[0], self.center[1]))
         
         if self.limit:
-            self.ax.set_xlim(self.limit[0], self.limit[1], crs=self.transform())
-            self.ax.set_ylim(self.limit[2], self.limit[3], crs=self.transform())
+            self.ax.set_extent(self.limit, self.transform())
         
         self.ax.imshow(
             self.data,
@@ -56,6 +57,11 @@ class WindPlotter(Plotter):
             extent=self.extent,
             transform=self.transform()
         )
+        
+        if self.inplace:
+            plt.show()
+            plt.close()
+            return
         
         buffer = io.BytesIO()
         plt.savefig(buffer, dpi=self.resolution, bbox_inches=self.bbox_inches, pad_inches=self.pad_inches, transparent=self.transparent)

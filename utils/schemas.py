@@ -14,6 +14,8 @@ class PlotterContext(BaseModel):
     projection: Type[ccrs.Projection]               = ccrs.PlateCarree
     transform: Type[ccrs.Projection]                = ccrs.PlateCarree
     tag: str | None                                 = None
+    center: tuple[float, float] | None              = None
+    scale: float | None                             = None
     cmap: str | Type[mpl.colors.Colormap]           = "viridis"
     norm: Type[mpl.colors.Normalize] | None         = None
     vmin: float | None                              = None
@@ -26,6 +28,7 @@ class PlotterContext(BaseModel):
     bbox_inches: str | None                         = "tight"
     pad_inches: float | None                        = 0
     transparent: bool | None                        = False
+    inplace: bool | None                            = False
 
 class BatchContext(BaseModel):
     fn_args: list[Any] | None        = None
