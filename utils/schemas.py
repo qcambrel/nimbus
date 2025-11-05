@@ -11,9 +11,9 @@ class BandpassContext(BaseModel):
     gaussian: bool    = False
 
 class PlotterContext(BaseModel):
-    projection: Type[ccrs.Projection]       = ccrs.PlateCarree()
-    transform: Type[ccrs.Projection]        = ccrs.PlateCarree()
-    cmap: str | Type[mpl.colors.Colormap]   = plt.cm.viridis
+    projection: Type[ccrs.Projection]       = ccrs.PlateCarree
+    transform: Type[ccrs.Projection]        = ccrs.PlateCarree
+    cmap: str | Type[mpl.colors.Colormap]   = "viridis"
     norm: Type[mpl.colors.Normalize] | None = None
     vmin: float | None                      = None
     vmax: float | None                      = None
@@ -32,8 +32,8 @@ class BackgroundContext(BaseModel):
     background_name: str | None               = None
     tag: str | None                           = None
     resolution: int | None                    = None
-    projection: Type[ccrs.Projection]         = ccrs.PlateCarree()
-    transform: Type[ccrs.Projection]          = ccrs.PlateCarree()
+    projection: Type[ccrs.Projection]         = ccrs.PlateCarree
+    transform: Type[ccrs.Projection]          = ccrs.PlateCarree
     facecolor: str | None                     = None
     edgecolor: str | None                     = None
     linewidth: float | None                   = None
@@ -48,8 +48,8 @@ class CoastlineContext(BaseModel):
     coastlines: str | None                    = None
     tag: str | None                           = None
     resolution: int | None                    = None
-    projection: Type[ccrs.Projection]         = ccrs.PlateCarree()
-    transform: Type[ccrs.Projection]          = ccrs.PlateCarree()
+    projection: Type[ccrs.Projection]         = ccrs.PlateCarree
+    transform: Type[ccrs.Projection]          = ccrs.PlateCarree
     facecolor: str | None                     = None
     edgecolor: str | None                     = None
     linewidth: float | None                   = None
@@ -63,8 +63,8 @@ class BorderContext(BaseModel):
     borders: str | None                       = None
     tag: str | None                           = None
     resolution: int | None                    = None
-    projection: Type[ccrs.Projection]         = ccrs.PlateCarree()
-    transform: Type[ccrs.Projection]          = ccrs.PlateCarree()
+    projection: Type[ccrs.Projection]         = ccrs.PlateCarree
+    transform: Type[ccrs.Projection]          = ccrs.PlateCarree
     facecolor: str | None                     = None
     edgecolor: str | None                     = None
     linewidth: float | None                   = None
@@ -78,8 +78,8 @@ class RoadContext(BaseModel):
     roads: str | None                         = None
     tag: str | None                           = None
     resolution: int | None                    = None
-    projection: Type[ccrs.Projection]         = ccrs.PlateCarree()
-    transform: Type[ccrs.Projection]          = ccrs.PlateCarree()
+    projection: Type[ccrs.Projection]         = ccrs.PlateCarree
+    transform: Type[ccrs.Projection]          = ccrs.PlateCarree
     facecolor: str | None                     = None
     edgecolor: str | None                     = None
     linewidth: float | None                   = None

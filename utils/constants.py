@@ -76,3 +76,30 @@ WEATHER_VARIABLES_LONG: tuple[str, ...]     = (
 AEROSOLS_EDGECOLOR: np.ndarray              = np.array([50, 50, 50]) / 255
 TEMP_DIR: str                               = os.path.join(ROOT_DIR, "features", "tmp")
 WEIGHTS_DIR: str                            = os.path.join(ROOT_DIR, "processing", "weights")
+PROJECTION_LIST: tuple[str, ...]            = (
+    "PlateCarree"
+    "AlbersEqualArea"
+    "AzimuthalEquidistant"
+    "LambertConformal"
+    "LambertCylindrical"
+    "Mercator"
+    "Miller"
+    "Mollweide"
+    "Orthographic"
+    "Robinson"
+    "Sinusoidal"
+    "Stereographic"
+    "TransverseMercator"
+    "UTM"
+    "InterruptedGoodeHomolosine"
+    "RotatedPole"
+    "OSGB"
+    "EuroPP"
+    "Geostationary"
+    "NearsidePerspective"
+    "Gnomonic"
+    "LambertAzimuthalEqualArea"
+    "NorthPolarStereo"
+    "OSNI"
+    "SouthPolarStereo"
+)

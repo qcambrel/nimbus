@@ -25,7 +25,7 @@ def cache_background(cache_dir: str, context: BackgroundContext) -> str:
     Pre-renders and caches high resolution background images.
     """
     fig = plt.figure(dpi=context.resolution)
-    ax  = plt.axes(projection=context.projection)
+    ax  = plt.axes(projection=context.projection())
     
     match context.background_name:
         case "natural":
@@ -81,7 +81,7 @@ def cache_coastlines(cache_dir: str, temp_dir: str, context: CoastlineContext, c
     Caching the geometric transformation for reuse saves on compute time.
     """
     fig = plt.figure(dpi=context.resolution)
-    ax  = plt.axes(projection=context.projection)
+    ax  = plt.axes(projection=context.projection())
 
     resp = requests.get(context.coastlines)
     resp.raise_for_status()
@@ -121,7 +121,7 @@ def cache_borders(cache_dir: str, temp_dir: str, context: BorderContext) -> str:
     Caching the geometric transformation for reuse saves on compute time.
     """
     fig = plt.figure(dpi=context.resolution)
-    ax  = plt.axes(projection=context.projection)
+    ax  = plt.axes(projection=context.projection())
 
     url = context.borders
 
