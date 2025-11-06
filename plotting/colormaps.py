@@ -8,7 +8,7 @@ from utils.schemas import ColormapContext
 
 class Colormap:
     def __init__(self, context: ColormapContext):
-        self.rgb      = context.rgb_npy if context.rgb_npy else context.rgb_mpl
+        self.rgb      = context.rgb_npy if context.rgb_npy is not None else context.rgb_mpl
         self.levels   = context.levels
         self.ticks    = context.ticks
         self.target   = context.target

@@ -70,20 +70,23 @@ class WindPlotter(Plotter):
         plt.close()
         
         img = Image.open(buffer)
+
+        coasts  = os.path.join(cache_dir, self.tag, "features", "gshss.png")
+        borders = os.path.join(cache_dir, self.tag, "features", "borders.png")
+
+        if os.path.exists(coasts) and os.path.exists(borders):
+            img2 = Image.open(coasts)
+            img3 = Image.open(borders)
+
+            img.paste(img2, mask=img2)
+            img.paste(img3, mask=img3)
+
+        year = timestamp[:4]
+        month = timestamp[5:7]
+        day = timestamp[8:10]
+        hour = timestamp[11:13]
+        img.save(os.path.join(cache_dir, self.tag, "frames", "10m-winds", year, month, day, f"{hour}.png"))
         buffer.close()
-
-        coasts  = os.path(cache_dir, self.tag, "features", "gshss.png")
-        borders = os.path(cache_dir, self.tag, "features", "borders.png")
-
-        img2 = Image.open(coasts)
-        img3 = Image.open(borders)
-
-        img.paste(img2, mask=img2)
-        img.paste(img3, mask=img3)
-
-        year, month, day, hour = timestamp.split("-")
-        img.save(os.path(cache_dir, self.tag, "frames", "10-m winds", year, month, day, f"{hour}.png"))
-        
 
 class T2MPlotter(Plotter):
     """

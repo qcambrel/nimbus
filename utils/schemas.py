@@ -1,16 +1,16 @@
 import numpy as np
 import matplotlib as mpl
 import cartopy.crs as ccrs
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from pydantic.types import conint
 from typing import Any, Type, Optional, TypeAlias, Annotated, Callable
 
-NormType: TypeAlias = Optional[Type[mpl.colors.BoundaryNorm] | Type[mpl.colors.Normalize]]
+# NormType: TypeAlias = Optional[mpl.colors.BoundaryNorm | mpl.colors.Normalize]
+NormType: TypeAlias = Optional[mpl.colors.Normalize | mpl.colors.BoundaryNorm]
 CmapType: TypeAlias = Optional[str | Type[mpl.colors.Colormap]]
 ProjType: TypeAlias = Optional[Type[ccrs.Projection]]
 ExtentType: TypeAlias = Optional[tuple[float, float, float, float]]
-ArrayType: TypeAlias = Optional[Type[np.ndarray]]
-# Channel = Annotated[int, Ge(0), Le(3)]
+ArrayType: TypeAlias = Optional[np.ndarray]
 Channel = Annotated[int, conint(ge=0, le=3)]
 
 class BandpassContext(BaseModel):
@@ -19,13 +19,14 @@ class BandpassContext(BaseModel):
     gaussian: bool    = False
 
 class PlotterContext(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
     projection: ProjType | None        = ccrs.PlateCarree
     transform: ProjType | None         = ccrs.PlateCarree
     tag: str | None                    = None
     center: tuple[float, float] | None = None
     scale: float | None                = None
     cmap: CmapType | None              = "viridis"
-    norm: NormType | None              = None
+    norm: Optional[NormType] | None              = None
     vmin: float | None                 = None
     vmax: float | None                 = None
     interpolation: str | None          = None
@@ -118,6 +119,7 @@ class RegridderContext(BaseModel):
     weights_dir: str | None           = None
 
 class ColormapContext(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
     vmin: float | None        = None
     vmax: float | None        = None
     levels: ArrayType | None  = None
@@ -128,9 +130,10 @@ class ColormapContext(BaseModel):
     ticks: ArrayType | None   = None
 
 class BlendContext(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
     scale: Callable | None  = None
     channel: Channel | None = None
-    norm: NormType | None   = None
+    norm: Optional[NormType] | None              = None
     cmap: CmapType | None   = None
     low: float | None       = None
     high: float | None      = None
