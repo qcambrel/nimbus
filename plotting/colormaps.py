@@ -40,6 +40,13 @@ class Colormap:
 def interpolate_levels(ticks: np.ndarray, target: np.ndarray) -> np.ndarray:
     """
     Interpolate an array of tick values to target color levels
+
+    Args:
+        ticks (np.ndarray): The array of tick values
+        target (np.ndarray): The target color levels
+
+    Returns:
+        np.ndarray: The interpolated color levels
     """
     func   = interp.interp1d(np.arange(len(ticks)), ticks)
     levels = func(np.linspace(0.0, len(ticks) - 1, len(target)))

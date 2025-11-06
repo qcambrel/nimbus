@@ -7,6 +7,15 @@ def savitzky_golay2d(z: np.ndarray, window_size: int, order: int, derivative: st
     """
     Applies a low pass Savitzky-Golay filter to a 2D array.
     Savitzky-Golay reduces noise while preserving important features.
+
+    Args:
+        z (np.ndarray): Input array
+        window_size (int): Size of the window
+        order (int): Order of the polynomial
+        derivative (str): Optional derivative to apply
+
+    Returns:
+        np.ndarray: Filtered array
     """
     # number of polynomial terms
     n_terms = (order + 1) * (order + 2) / 2

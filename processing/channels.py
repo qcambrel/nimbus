@@ -5,15 +5,15 @@ from utils.schemas import BlendContext
 
 def blend(image: np.ndarray, context: BlendContext) -> np.ndarray:
     """
-    Blends a color or alpha channel of an image based on intensity.
-    Assumes alpha blending by default.
+    Blends a color or alpha channel of an image based on intensity
+    Assumes alpha blending by default
 
     Args:
-        image (np.ndarray): The image to blend.
-        context (BlendContext): The context for the blend.
+        image (np.ndarray): The image to blend
+        context (BlendContext): The context for the blend
 
     Returns:
-        np.ndarray: The blended image.
+        np.ndarray: The blended image
     """
     if context.scale is None:
         context.scale = scale

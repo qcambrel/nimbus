@@ -134,3 +134,8 @@ class BlendContext(BaseModel):
     cmap: CmapType | None   = None
     low: float | None       = None
     high: float | None      = None
+
+class ResampleContext(BaseModel):
+    shape: tuple[int, int] | None = None
+    center: bool | None           = None
+    resample: Callable | None     = None

@@ -7,6 +7,12 @@ from utils.schemas import RegridderContext
 def bounds(centers: np.ndarray) -> np.ndarray:
     """
     Computes the cell boundaries of center coordinates for conservative regridding.
+
+    Args:
+        centers (np.ndarray): The center coordinates of the cells
+
+    Returns:
+        np.ndarray: The cell boundaries
     """
     dist: np.ndarray  = np.diff(centers) / 2
     first: np.ndarray = centers[0] - dist[0]
@@ -18,6 +24,12 @@ def build_regridder(context: RegridderContext) -> xe.Regridder:
     Builds a regridder for conservative, bilinear, or nearest regridding.
 
     Optional: Save weights for reuse.
+
+    Args:
+        context (RegridderContext): The context for the regridder
+
+    Returns:
+        xe.Regridder: The regridder
     """
     method: str    = context.method
     x0, x1, y0, y1 = context.extent
@@ -85,6 +97,13 @@ def build_regridder(context: RegridderContext) -> xe.Regridder:
 def batch_regrid(batch: dict[str, np.ndarray], regridder: xe.Regridder) -> dict[str, np.ndarray]:
     """
     Batch process for regridding.
+
+    Args:
+        batch (dict[str, np.ndarray]): Batch of data to regrid
+        regridder (xe.Regridder): Regridder to use for regridding
+
+    Returns:
+        dict[str, np.ndarray]: Batch of regridded data
     """
     batch["data"] = regridder(batch["data"])
     return batch

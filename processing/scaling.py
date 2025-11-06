@@ -4,6 +4,14 @@ def scale(image: np.ndarray, low: float = None, high: float = None) -> np.ndarra
     """
     Scales an image to the range [0, 1].
     Scaling alpha channels enables intensity based alpha blending.
+
+    Args:
+        image (np.ndarray): The image to scale
+        low (float, optional): The low value to scale to. Defaults to None.
+        high (float, optional): The high value to scale to. Defaults to None.
+
+    Returns:
+        np.ndarray: The scaled image
     """
     if low is None:
         low = np.min(image)
