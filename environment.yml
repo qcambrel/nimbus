@@ -25,4 +25,3 @@ dependencies:
   - xesmf
 pip:
   - ray==2.51.1
-prefix: /Users/quincycambrel/miniforge3/envs/earth

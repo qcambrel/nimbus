@@ -1,5 +1,5 @@
 services:
-  earthdash:
+  nimbus:
     build: 
       context: .
       dockerfile: Dockerfile
