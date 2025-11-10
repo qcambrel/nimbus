@@ -93,17 +93,3 @@ def build_regridder(context: RegridderContext) -> xe.Regridder:
         reuse_weights=reuse_weights
     )
     return regridder
-
-def batch_regrid(batch: dict[str, np.ndarray], regridder: xe.Regridder) -> dict[str, np.ndarray]:
-    """
-    Batch process for regridding.
-
-    Args:
-        batch (dict[str, np.ndarray]): Batch of data to regrid
-        regridder (xe.Regridder): Regridder to use for regridding
-
-    Returns:
-        dict[str, np.ndarray]: Batch of regridded data
-    """
-    batch["data"] = regridder(batch["data"])
-    return batch
