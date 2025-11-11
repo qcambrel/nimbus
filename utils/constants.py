@@ -1,4 +1,5 @@
 import os
+import datetime
 import numpy as np
 import matplotlib as mpl
 import cartopy.crs as ccrs
@@ -109,3 +110,6 @@ PROJECTION_LIST: tuple[str, ...]            = (
 
 OCEAN_COLOR: str               = mpl.colors.rgb2hex(np.array([190, 232, 255]) / 255)
 AEROSOLS_EDGECOLOR: np.ndarray = np.array([50, 50, 50]) / 255
+
+MIN_DATE = datetime.datetime.strptime("19930102", "%Y%m%d")
+MAX_DATE = datetime.datetime.strptime("20241231", "%Y%m%d")
