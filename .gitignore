@@ -15,3 +15,5 @@ tests/.pytest_cache
 *.ipynb
 *LogFile
 data
+temp
+get_data.py

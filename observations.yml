@@ -2,3 +2,9 @@
   short name: "CCMP_WINDS_10M6HR_L4_V3.1"
 weather types:
   short name: ["M2I3NPASM", "M2T1NXSLV", "M2T1NXFLX"]
+accumulated rainfall:
+  short name: "M2T1NXFLX"
+accumulated snowfall:
+  short name: "M2T1NXFLX"
+vorticity:
+  short name: "M2T1NXSLV"

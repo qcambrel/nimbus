@@ -5,6 +5,7 @@ import numpy as np
 from PIL import Image
 import earthaccess as ea
 from netCDF4 import Dataset
+import earthaccess.exceptions as eax
 from processing import preprocessing
 from utils import schemas, constants
 from plotting import plots, colormaps
@@ -16,13 +17,36 @@ def handler(event: dict):
             "Your time delta is too large. Reduce it to 5 days or less."
         )
     
-    if "EARTHDATA_USERNAME" not in os.environ:
-        os.environ["EARTHDATA_USERNAME"] = event["auth_user"]
+    # print("EARTHDATA_USERNAME" not in os.environ)
+
+    # if "EARTHDATA_USERNAME" not in os.environ:
+    #     os.environ["EARTHDATA_USERNAME"] = event["auth_user"]
     
-    if "EARTHDATA_PASSWORD" not in os.environ:
+    # if "EARTHDATA_PASSWORD" not in os.environ:
+    #     os.environ["EARTHDATA_PASSWORD"] = event["auth_pass"]
+
+    if event["auth_user"]:
+        os.environ["EARTHDATA_USERNAME"] = event["auth_user"]
+
+    if event["auth_pass"]:
         os.environ["EARTHDATA_PASSWORD"] = event["auth_pass"]
 
-    ea.login()
+    # print(os.environ["EARTHDATA_USERNAME"])
+    # print(os.environ["EARTHDATA_PASSWORD"])
+    # print("EARTHDATA_USERNAME" in os.environ)
+    # if not os.environ["EARTHDATA_USERNAME"] or not os.environ["EARTHDATA_PASSWORD"]:
+    #     raise ValueError(
+    #         "Your EarthData credentials are missing. " \
+    #         "Please add them to your environment variables or provide them in the form."
+    #     )
+    
+    try:
+        ea.login()
+    except eax.LoginAttemptFailure:
+        raise ValueError(
+            "Your EarthData credentials are incorrect. " \
+            "Please check them and try again."
+        )
 
     if event["category"] == "weather types":
         datasets = []
@@ -54,13 +78,14 @@ def handler(event: dict):
         datapaths = os.listdir("data")
         datasets  = [Dataset(datapath) for datapath in datapaths]
 
-    preprocessed = []
-    for dataset in datasets:
-        match event["category"]:
-            case "10m winds":
-                dataset = preprocessing.preprocess_wind_data(dataset)
-            case "weather types":
-                dataset = preprocessing.preprocess_weather_types(dataset)
-            case _:
-                continue
-        preprocessed.append(dataset)
+    match event["category"]:
+        case "10m winds":
+            preprocessed = preprocessing.preprocess_wind_data(datasets)
+        case "weather types":
+            preprocessed = preprocessing.preprocess_weather_types(datasets)
+        case "accumulated rainfall":
+            preprocessed = preprocessing.preprocess_accumulated_rain(datasets)
+        case "accumulated snowfall":
+            preprocessed = preprocessing.preprocess_accumulated_snow(datasets)
+        case _:
+            preprocessed = None
